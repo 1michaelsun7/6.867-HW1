@@ -71,7 +71,7 @@ def batch_gradient_descent(x, y, x_init=[None], lr=0.01, max_iters=10000):
 	return theta
 
 def stochastic_gradient_descent(x, y, x_init=[None], lr=0.01, max_iters=10000):
-iters = 0
+	iters = 0
 	
 	# epsilon for convergence criterion
 	eps = 1e-6

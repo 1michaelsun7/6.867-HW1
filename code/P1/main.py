@@ -15,12 +15,21 @@ def gradient_quadratic_bowl(A, B):
 
 if __name__ == "__main__":
 	#1.1
-	# (gaussMean,gaussCov,quadBowlA,quadBowlb) = loadpm.getData()
-	# def func(x):
-	# 	return 0.5*np.dot(np.transpose(x), np.dot(quadBowlA, x)) - np.dot(np.transpose(x), quadBowlb)
-	# grad_qb = gradient_quadratic_bowl(quadBowlA, quadBowlb)
-	# best_val = gd.functional_gradient_descent(func, np.random.random((2,)), f_prime=grad_qb)
-	# print best_val
+	(gaussMean,gaussCov,quadBowlA,quadBowlb) = loadpm.getData()
+	def func(x):
+		return 0.5*np.dot(np.transpose(x), np.dot(quadBowlA, x)) - np.dot(np.transpose(x), quadBowlb)
+	grad_qb = gradient_quadratic_bowl(quadBowlA, quadBowlb)
+	best_val = gd.functional_gradient_descent(func, np.random.random((2,)), f_prime=grad_qb)
+	print best_val
+
+	#1.2
+	# By not initializing f_prime, we will use the central difference approximation in grad_descent.py
+	(gaussMean,gaussCov,quadBowlA,quadBowlb) = loadpm.getData()
+	def func(x):
+		return 0.5*np.dot(np.transpose(x), np.dot(quadBowlA, x)) - np.dot(np.transpose(x), quadBowlb)
+	grad_qb = gradient_quadratic_bowl(quadBowlA, quadBowlb)
+	best_val = gd.functional_gradient_descent(func, np.random.random((2,)), f_prime=grad_qb)
+	print best_val
 
 	#1.3
 	X, Y = loadfd.getData()
@@ -31,7 +40,7 @@ if __name__ == "__main__":
 
 	print np.dot(np.dot(np.linalg.inv(np.dot(np.transpose(array_x), array_x)), np.transpose(array_x)), array_y)
 
-	#1.3
+	#1.4
 	X, Y = loadfd.getData()
 	array_x = np.array(X)
 	array_y = np.array(Y)
