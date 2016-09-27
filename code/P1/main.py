@@ -5,9 +5,9 @@ import numpy as np
 import math
 
 def gradient_quadratic_bowl(A, B):
-	def grad(x):
-		return np.dot(A, x) - B
-	return grad
+    def grad(x):
+        return np.dot(A, x) - B
+    return grad
 
 def gradient_gaussian(f, mean, cov):
 	def grad(x):
@@ -15,7 +15,7 @@ def gradient_gaussian(f, mean, cov):
 	return grad
 
 if __name__ == "__main__":
-	#1.1
+    #1.1
 	(gaussMean,gaussCov,quadBowlA,quadBowlb) = loadpm.getData()
 	def func(x):
 		return 0.5*np.dot(np.transpose(x), np.dot(quadBowlA, x)) - np.dot(np.transpose(x), quadBowlb)
