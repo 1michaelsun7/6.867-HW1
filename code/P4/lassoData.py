@@ -20,4 +20,3 @@ def lassoValData():
 
 def lassoTestData():
     return getData('lasso_test.txt')
-

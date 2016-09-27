@@ -15,6 +15,7 @@ def ridge_regression(X, Y, M, lam):
 	return phi, weight_vect
 
 def basis(X, M):
+	X = np.squeeze(X)
 	M += 1
 	N = len(X)
 	phi = np.zeros((N,M))
