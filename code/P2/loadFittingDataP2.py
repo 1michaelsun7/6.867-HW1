@@ -13,7 +13,4 @@ def getData(ifPlotData=True):
     if ifPlotData:
         plt.plot(X,Y,'o')
         plt.xlabel('x')
-        plt.ylabel('y')
-        plt.show()
-
     return (X,Y)
