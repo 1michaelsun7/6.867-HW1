@@ -16,15 +16,21 @@ def plot(X1, func):
     plt.plot(X1, func)
     plt.xlabel('x')
     plt.ylabel('y')
+    plt.rcParams.update({'font.size': 50})
     plt.show()
   
 if __name__ == "__main__":
     #2.1
+    M=10
     (X, Y) = loadfd.getData(False)
-    phi = rg.f(X, Y, 1)
+    phi = rg.f(X, Y, M)
     w = np.dot(np.linalg.inv(np.dot(np.transpose(phi), phi)),np.dot(np.transpose(phi), Y))
     print 'w: ', w
-#    plot(np.dot(phi,w))
+    
+    xran = np.linspace(0,1,num=400)
+    phi2 = rg.f(xran, Y, M)
+#    print np.dot(phi2, w)
+#    plot(xran, np.dot(phi2, w))
     
     #2.2
     sse = rg.SSE(X, Y, w, phi)
@@ -43,8 +49,8 @@ if __name__ == "__main__":
     
     xran = np.linspace(0,1,num=400)
     phi2 = rg.fCos(xran, Y)
-#    print np.dot(phi2, w)
-#    plot(xran, np.dot(phi2, w)) ###SMOOTH CUURVES
+    print np.dot(phi2, w)
+    plot(xran, np.dot(phi2, w)) ###SMOOTH CUURVES
     
     array_x = np.array(X)
     array_y = np.array(Y)

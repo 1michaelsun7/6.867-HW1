@@ -85,27 +85,27 @@ def stochastic_gradient_descent(x, y, x_init=[None], lr=0.01, max_iters=10000):
 
     J_err = np.linalg.norm(np.dot(x,theta)-y)**2
 
-	while iters < max_iters:
-		delta_t = 0
-		if iters % 1000 == 0:
-			print "Iteration %d" % iters
+    while iters < max_iters:
+        delta_t = 0
+        if iters % 1000 == 0:
+            print "Iteration %d" % iters
 
-		for j in xrange(num_samples):
-			x_prime = np.copy(x)
-			np.random.shuffle(x_prime)
-			# d/dTheta - since this is stochastic, we update wrt each data point one at a time
-			grad_J = np.zeros((x.shape[1],))
-			for k in xrange(x.shape[1]):
-				grad_J[k] = np.sum(1.0/float(num_samples)*(np.dot(x_prime[j],theta)-y[j])*x_prime[:,k])
+        for j in xrange(num_samples):
+            x_prime = np.copy(x)
+            np.random.shuffle(x_prime)
+            # d/dTheta - since this is stochastic, we update wrt each data point one at a time
+            grad_J = np.zeros((x.shape[1],))
+            for k in xrange(x.shape[1]):
+                grad_J[k] = np.sum(1.0/float(num_samples)*(np.dot(x_prime[j],theta)-y[j])*x_prime[:,k])
 
-		delta_t = lr*grad_J + lr2*delta_t
-		theta -= delta_t
-		new_J_err = np.linalg.norm(np.dot(x,theta)-y)**2
+        delta_t = lr*grad_J + lr2*delta_t
+        theta -= delta_t
+        new_J_err = np.linalg.norm(np.dot(x,theta)-y)**2
 
-		if abs(new_J_err - J_err) < eps or np.linalg.norm(grad_J) < eps:
-			print "Converged after %d iterations with loss %f" % (iters, new_J_err)
-			J_err = new_J_err
-			break
+        if abs(new_J_err - J_err) < eps or np.linalg.norm(grad_J) < eps:
+            print "Converged after %d iterations with loss %f" % (iters, new_J_err)
+            J_err = new_J_err
+            break
 
         J_err = new_J_err
         if iters == max_iters - 1:
