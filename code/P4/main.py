@@ -26,7 +26,7 @@ if __name__ == "__main__":
 	best_lam = None
 	best_w = None
 
-	lambdas = [0.01, 0.05, 0.1, 0.25, 0.3, 0.5, 0.7, 1]
+	lambdas = [0.0001, 0.001, 0.01, 0.05, 0.1, 0.25, 0.3, 0.5, 0.7, 1, 10]
 	for cur_lam in lambdas:
 		coeffs = np.array(lasso.lasso(trainX, trainY, cur_lam))
 		loss = 0

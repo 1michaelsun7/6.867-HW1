@@ -49,11 +49,11 @@ def SSEDeriv(X, Y, w, phi):
 def approx_gradient(f, init, delta):
     return (f(init + delta) - f(init - delta))/(2*delta)
     
-def batch_gradient_descent(x, y, x_init=[None], lr=0.01, max_iters=10000):
+def batch_gradient_descent(x, y, orig, x_init=[None], lr=0.01, max_iters=10000):
     iters = 0
     
     # epsilon for convergence criterion
-    eps = 1e-6
+    eps = 1e-8
 
     # information about the data
     num_samples = x.shape[0]
@@ -62,7 +62,10 @@ def batch_gradient_descent(x, y, x_init=[None], lr=0.01, max_iters=10000):
     init_zeros = np.zeros((x.shape[1],))
     theta = x_init if x_init.any() else init_zeros
 
-    J_err = np.linalg.norm(np.dot(x,theta)-y)**2
+    #J_err = np.linalg.norm(np.dot(x,theta)-y)**2
+    old_sse = float('inf')
+
+    SSEs = []
 
     while iters < max_iters:
         if iters % 1000 == 0:
@@ -74,16 +77,65 @@ def batch_gradient_descent(x, y, x_init=[None], lr=0.01, max_iters=10000):
             grad_theta[j] = np.sum(1.0/float(num_samples)*(np.dot(x,theta)-y)*x[:,j])
 
         theta -= lr*grad_theta
-        new_J_err = np.linalg.norm(np.dot(x,theta)-y)**2
+        #new_J_err = np.linalg.norm(np.dot(x,theta)-y)**2
+        sse = SSE(orig, y, theta, x)
+        SSEs.append(sse)
 
-        if abs(new_J_err - J_err) < eps or np.linalg.norm(grad_theta) < eps:
-            print "Converged after %d iterations with loss %f" % (iters, new_J_err)
-            J_err = new_J_err
+        if abs(sse - old_sse) < eps or np.linalg.norm(grad_theta) < eps:
+            print "Converged after %d iterations with loss %f" % (iters, sse)
+            #J_err = new_J_err
+            old_sse = sse
             break
 
-        J_err = new_J_err
+        #J_err = new_J_err
+        old_sse = sse
         if iters == max_iters - 1:
             print "Max iterations (%d iterations) exceeded" % max_iters
+        iters += 1
+
+    return theta, SSEs
+
+def stochastic_gradient_descent(x, y, orig, x_init=[None], lr=0.01, max_iters=10000):
+    iters = 0
+    
+    # epsilon for convergence criterion
+    eps = 1e-12
+
+    # information about the data
+    num_samples = x.shape[0]
+
+    # initialize theta (subject to change)
+    init_zeros = np.zeros((x.shape[1],))
+    theta = x_init if x_init.any() else init_zeros
+
+    #J_err = np.linalg.norm(np.dot(x,theta)-y)**2
+    old_sse = float('inf')
+
+    while iters < max_iters:
+        if iters % 100000 == 0:
+            print "Iteration %d" % iters
+            print "SSE %f" % old_sse 
+        if iters == max_iters - 1:
+            print "Max iterations (%d iterations) exceeded" % max_iters
+
+        j = random.randint(0, num_samples-1)
+            
+        # d/dTheta - since this is stochastic, we update wrt each data point one at a time
+        grad_J = 1.0/float(num_samples)*(np.dot(x[j],theta)-y[j])*x[j]
+
+        delta_t = (lr + iters/100)**-0.75
+        theta -= delta_t*grad_J
+        #new_J_err = np.linalg.norm(np.dot(x,theta)-y)**2
+        sse = SSE(orig, y, theta, x)
+
+        if abs(sse-old_sse) < eps or np.linalg.norm(grad_J) < eps:
+            print "Converged after %d iterations with loss %f" % (iters, sse)
+            #J_err = new_J_err
+            old_sse = sse
+            break
+
+        #J_err = new_J_err
+        old_sse = sse
         iters += 1
 
     return theta
