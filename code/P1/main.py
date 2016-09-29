@@ -55,8 +55,8 @@ if __name__ == "__main__":
 	# print np.dot(np.dot(np.linalg.inv(np.dot(np.transpose(array_x), array_x)), np.transpose(array_x)), array_y)
 
 	# #1.4
-	# X, Y = loadfd.getData()
-	# array_x = np.array(X)
-	# array_y = np.array(Y)
-	# theta = gd.stochastic_gradient_descent(array_x, array_y, x_init=np.random.random((10,)), lr=100000, max_iters=10000)
-	# print theta
+	X, Y = loadfd.getData()
+	array_x = np.array(X)
+	array_y = np.array(Y)
+	theta = gd.stochastic_gradient_descent(array_x, array_y, x_init=np.random.random((10,)), lr=1000000, max_iters=10000)
+	print theta

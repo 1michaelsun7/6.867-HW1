@@ -21,39 +21,49 @@ def plot(X1, func):
   
 if __name__ == "__main__":
     #2.1
-    M=10
+    # M=10
     (X, Y) = loadfd.getData(False)
-    phi = rg.f(X, Y, M)
-    w = np.dot(np.linalg.inv(np.dot(np.transpose(phi), phi)),np.dot(np.transpose(phi), Y))
-    print 'w: ', w
+    # phi = rg.f(X, Y, M)
+    # w = np.dot(np.linalg.inv(np.dot(np.transpose(phi), phi)),np.dot(np.transpose(phi), Y))
+    # print 'w: ', w
     
-    xran = np.linspace(0,1,num=400)
-    phi2 = rg.f(xran, Y, M)
+    # xran = np.linspace(0,1,num=400)
+    # phi2 = rg.f(xran, Y, M)
 #    print np.dot(phi2, w)
 #    plot(xran, np.dot(phi2, w))
     
     #2.2
-    sse = rg.SSE(X, Y, w, phi)
-    ssed = rg.SSEDeriv(X, Y, w, phi)
+    # sse = rg.SSE(X, Y, w, phi)
+    # ssed = rg.SSEDeriv(X, Y, w, phi)
     
-    def fn(w1):
-        return rg.SSE(X,Y,w1,phi)
+    # def fn(w1):
+    #     return rg.SSE(X,Y,w1,phi)
         
-    print rg.approx_gradient(fn, w, 1e-6)
-    
-    #2.4
-    phi = rg.fCos(X, Y)
-    w = np.dot(np.linalg.inv(np.dot(np.transpose(phi), phi)),np.dot(np.transpose(phi), Y))
-    print 'w: ', w
-#    plot(np.dot(phi,w))
-    
-    xran = np.linspace(0,1,num=400)
-    phi2 = rg.fCos(xran, Y)
-    print np.dot(phi2, w)
-    plot(xran, np.dot(phi2, w)) ###SMOOTH CUURVES
-    
+    # print rg.approx_gradient(fn, w, 1e-6)
+
+    #2.3
     array_x = np.array(X)
     array_y = np.array(Y)
-#    theta = batch_gradient_descent(array_x, array_y, x_init=np.random.random((10,)), lr=1e-4, max_iters=10000)
-#    print theta
+    for i in xrange(5):
+        M = i+1
+        phi = rg.f(X, Y, M)
+        # theta, SSEs = rg.batch_gradient_descent(phi, array_y, array_x, x_init=np.random.random((M+1,)), lr=0.05, max_iters=1e8)
+        # print theta
+        # plt.plot(range(len(SSEs)), SSEs)
+        # plt.xlabel('iters')
+        # plt.ylabel('SSE')
+        # plt.show()
 
+        theta = rg.stochastic_gradient_descent(phi, array_y, array_x, x_init=np.zeros((M+1,)), lr=2e-2, max_iters=1e8)
+        print theta
+    
+    #2.4
+#     phi = rg.fCos(X, Y)
+#     w = np.dot(np.linalg.inv(np.dot(np.transpose(phi), phi)),np.dot(np.transpose(phi), Y))
+#     print 'w: ', w
+# #    plot(np.dot(phi,w))
+    
+#     xran = np.linspace(0,1,num=400)
+#     phi2 = rg.fCos(xran, Y)
+#     print np.dot(phi2, w)
+#     plot(xran, np.dot(phi2, w)) ###SMOOTH CUURVES
