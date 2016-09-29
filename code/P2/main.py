@@ -54,7 +54,7 @@ if __name__ == "__main__":
         # plt.ylabel('SSE')
         # plt.show()
 
-        theta = rg.stochastic_gradient_descent(phi, array_y, array_x, x_init=np.zeros((M+1,)), lr=2e-2, max_iters=1e8)
+        theta = rg.stochastic_gradient_descent(phi, array_y, array_x, x_init=np.zeros((M+1,)), lr=100000, max_iters=1e8)
         print theta
     
     #2.4

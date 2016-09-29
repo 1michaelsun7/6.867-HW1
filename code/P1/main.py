@@ -18,7 +18,7 @@ def gradient_gaussian(f, mean, cov):
 
 if __name__ == "__main__":
 	#1.1
-	# (gaussMean,gaussCov,quadBowlA,quadBowlb) = loadpm.getData()
+	(gaussMean,gaussCov,quadBowlA,quadBowlb) = loadpm.getData()
 	# def func(x):
 	# 	return 0.5*np.dot(np.transpose(x), np.dot(quadBowlA, x)) - np.dot(np.transpose(x), quadBowlb)
 	# grad_qb = gradient_quadratic_bowl(quadBowlA, quadBowlb)
@@ -26,15 +26,15 @@ if __name__ == "__main__":
 	# print best_val
 	# print np.dot(quadBowlA, best_val) - quadBowlb
 
-	# def gaussfunc(x):
-	# 	return np.negative(multivariate_normal.pdf(x, gaussMean, gaussCov))
-	# grad_gauss = gradient_gaussian(gaussfunc, gaussMean, gaussCov)
-	# best_val, norms = gd.functional_gradient_descent(gaussfunc, np.random.random((2,)),  f_prime=grad_gauss, lr=1e6, max_diff=1e-8)
-	# print best_val
-	# plt.plot(range(len(norms)), norms)
-	# plt.xlabel('iters')
-	# plt.ylabel('norm')
-	# plt.show()
+	def gaussfunc(x):
+		return np.negative(multivariate_normal.pdf(x, gaussMean, gaussCov))
+	grad_gauss = gradient_gaussian(gaussfunc, gaussMean, gaussCov)
+	best_val, norms = gd.functional_gradient_descent(gaussfunc, np.random.random((2,)),  f_prime=grad_gauss, lr=1e6, max_diff=1e-8)
+	print best_val
+	plt.plot(range(len(norms)), norms)
+	plt.xlabel('iters')
+	plt.ylabel('norm')
+	plt.show()
 
 	#1.2
 	# By not initializing f_prime, we will use the central difference approximation in grad_descent.py
@@ -55,8 +55,8 @@ if __name__ == "__main__":
 	# print np.dot(np.dot(np.linalg.inv(np.dot(np.transpose(array_x), array_x)), np.transpose(array_x)), array_y)
 
 	# #1.4
-	X, Y = loadfd.getData()
-	array_x = np.array(X)
-	array_y = np.array(Y)
-	theta = gd.stochastic_gradient_descent(array_x, array_y, x_init=np.random.random((10,)), lr=1000000, max_iters=10000)
-	print theta
+	# X, Y = loadfd.getData()
+	# array_x = np.array(X)
+	# array_y = np.array(Y)
+	# theta = gd.stochastic_gradient_descent(array_x, array_y, x_init=np.random.random((10,)), lr=1000000, max_iters=10000)
+	# print theta

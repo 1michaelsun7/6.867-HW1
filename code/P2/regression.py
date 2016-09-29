@@ -126,7 +126,7 @@ def stochastic_gradient_descent(x, y, orig, x_init=[None], lr=0.01, max_iters=10
         delta_t = (lr + iters/100)**-0.75
         theta -= delta_t*grad_J
         #new_J_err = np.linalg.norm(np.dot(x,theta)-y)**2
-        sse = SSE(orig, y, theta, x)
+        sse = SSE(orig, y, theta, x)*1.0/float(num_samples)
 
         if abs(sse-old_sse) < eps or np.linalg.norm(grad_J) < eps:
             print "Converged after %d iterations with loss %f" % (iters, sse)

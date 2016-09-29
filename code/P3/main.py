@@ -39,8 +39,18 @@ if __name__ == "__main__":
 	B_trainX, B_trainY = rgd.regressBData()
 	valX, valY = rgd.validateData()
 
+	# print "A: ", A_trainX, A_trainY
+	# print "B: ", B_trainX, B_trainY
+	# plt.plot(A_trainX,A_trainY,'o' , label='A')
+	# plt.plot(B_trainX,B_trainY,'co', label='B')
+	# plt.plot(valX, valY, 'ro', label='val')
+	# plt.legend(bbox_to_anchor=(1, 0.25))
+	# plt.xlabel('x')
+	# plt.ylabel('y')
+	# plt.show()
+
 	# params
-	alpha_ridge = [1e-15, 1e-10, 1e-8, 1e-4, 1e-3,1e-2, 1, 5, 10, 20]
+	alpha_ridge = [0,1e-15, 1e-10, 1e-8, 1e-4, 1e-3,1e-2, 1, 5, 10, 20]
 	M_vals = range(10)
 
 	best_loss = float('inf')
@@ -48,26 +58,26 @@ if __name__ == "__main__":
 	best_alpha = None
 	best_w = None
 
-	# # model select for A
-	# for M in M_vals:
-	# 	for alpha in alpha_ridge:
-	# 		phi, w = rr.ridge_regression(A_trainX, A_trainY, M, alpha)
-	# 		val_phi = rr.basis(valX, M)
+	# model select for A
+	for M in M_vals:
+		for alpha in alpha_ridge:
+			phi, w = rr.ridge_regression(A_trainX, A_trainY, M, alpha)
+			val_phi = rr.basis(valX, M)
 
-	# 		val_error = 0.5 * np.sum(np.square(np.dot(val_phi, w) - valY)) + alpha*np.sum(np.square(w))
+			val_error = 0.5 * np.sum(np.square(np.dot(val_phi, w) - valY)) + alpha*np.sum(np.square(w))
 
-	# 		if val_error < best_loss:
-	# 			print "Loss updated to ", round(val_error, 4)
-	# 			best_loss = val_error
-	# 			best_M = M
-	# 			best_alpha = alpha
-	# 			best_w = w
+			if val_error < best_loss:
+				print "Loss updated to ", round(val_error, 4)
+				best_loss = val_error
+				best_M = M
+				best_alpha = alpha
+				best_w = w
 
-	# # test on B data
-	# phi_B = rr.basis(B_trainX, best_M)
-	# test_loss = 0.5 * np.sum(np.square(np.dot(phi_B, best_w) - B_trainY)) + best_alpha*np.sum(np.square(best_w))
-	# print "Test set loss: ", test_loss
-	# print "Best params: ", (M, alpha)
+	# test on B data
+	phi_B = rr.basis(B_trainX, best_M)
+	test_loss = 0.5 * np.sum(np.square(np.dot(phi_B, best_w) - B_trainY)) + best_alpha*np.sum(np.square(best_w))
+	print "Test set loss: ", test_loss
+	print "Best params: ", (M, alpha)
 
 	# model select for B
 	for M in M_vals:
