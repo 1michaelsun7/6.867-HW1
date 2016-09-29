@@ -38,7 +38,20 @@ if __name__ == "__main__":
     
     # def fn(w1):
     #     return rg.SSE(X,Y,w1,phi)
-        
+
+    print rg.approx_gradient(fn, w, 1e-6)
+    
+    #2.4
+    phi = rg.fCos(X, Y)
+    w = np.dot(np.linalg.inv(np.dot(np.transpose(phi), phi)),np.dot(np.transpose(phi), Y))
+    print 'w: ', w
+#    plot(np.dot(phi,w))
+    
+#    xran = np.linspace(0,1,num=400)
+#    phi2 = rg.fCos(xran, Y)
+#    print np.dot(phi2, w)
+#    plot(xran, np.dot(phi2, w)) ###SMOOTH CUURVES
+    
     # print rg.approx_gradient(fn, w, 1e-6)
 
     #2.3
