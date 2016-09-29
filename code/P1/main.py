@@ -12,9 +12,9 @@ def gradient_quadratic_bowl(A, B):
 	return grad
 
 def gradient_gaussian(f, mean, cov):
-	def grad(x):
-		return -np.dot(np.dot(f(x), np.linalg.inv(cov)),(x-mean))
-	return grad
+    def grad(x):
+        return -np.dot(np.dot(f(x), np.linalg.inv(cov)),(x-mean))
+    return grad
 
 if __name__ == "__main__":
 	#1.1
