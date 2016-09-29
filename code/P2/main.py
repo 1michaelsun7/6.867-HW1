@@ -47,10 +47,10 @@ if __name__ == "__main__":
     print 'w: ', w
 #    plot(np.dot(phi,w))
     
-    xran = np.linspace(0,1,num=400)
-    phi2 = rg.fCos(xran, Y)
-    print np.dot(phi2, w)
-    plot(xran, np.dot(phi2, w)) ###SMOOTH CUURVES
+#    xran = np.linspace(0,1,num=400)
+#    phi2 = rg.fCos(xran, Y)
+#    print np.dot(phi2, w)
+#    plot(xran, np.dot(phi2, w)) ###SMOOTH CUURVES
     
     array_x = np.array(X)
     array_y = np.array(Y)
