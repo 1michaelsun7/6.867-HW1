@@ -7,11 +7,15 @@ def functional_gradient_descent(f, init, f_prime=None, lr=0.01, max_iters=10000,
 	
 	best_value = float("inf")
 
+	norms = []
+
 	while iters < max_iters:
 		eval_fn = f(init)
 		cur_value = np.linalg.norm(eval_fn)
 
 		deriv = f_prime(init) if f_prime else approx_gradient(f, init, 1e-6)
+
+		norms.append(np.linalg.norm(deriv))
 		
 		if abs(cur_value-best_value) < max_diff or np.linalg.norm(deriv) < max_diff:
 			best_value = cur_value
@@ -25,7 +29,7 @@ def functional_gradient_descent(f, init, f_prime=None, lr=0.01, max_iters=10000,
 		iters += 1
 
 	print "Converged after %d iterations" % iters
-	return init
+	return init, norms
 
 def approx_gradient(f, init, delta):
 	return (f(init + delta) - f(init - delta))/(2*delta)
